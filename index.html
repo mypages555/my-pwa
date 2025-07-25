@@ -532,39 +532,55 @@
 
         /* Responsive Design */
         @media (max-width: 480px) {
-        .beds-section {
-            flex-direction: column;
-            gap: 24px;
-        }
+            .beds-section {
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 16px;
+            }
+            
+            .beds-column {
+                flex: 0 0 calc(50% - 8px);
+            }
+
+        /* Уменьшаем внутренние отступы карточек */
+            .size-card {
+                padding: 12px 8px;
+            }
         
-        .beds-column {
-            width: 100%;
-        }
+        /* Уменьшаем размер шрифта */
+            .size-name {
+                font-size: 0.8rem;
+            }
         
-        /* Новые стили для двухколоночного отображения карточек */
-        #ort-beds-container, #pm-beds-container {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-        }
+            .size-count {
+                font-size: 1.4rem;
+            }
         
-        .size-card {
-            margin-bottom: 0;
-        }
-        
-        .mattress-options {
-            grid-template-columns: 1fr 1fr;
-        }
-        
-        header h1 {
-            font-size: 1.5rem;
-        }
-        
-        .card {
-            padding: 20px;
+        /* Корректируем кнопки */
+            .counter-btn {
+                width: 32px;
+                height: 32px;
+                font-size: 1rem;
+            }
+
+            .mattress-options {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            header h1 {
+                font-size: 1.5rem;
+            }
+            
+            .card {
+                padding: 20px;
+            }
         }
 
         @media (max-width: 360px) {
+            .beds-column {
+                flex: 0 0 100%;
+        }
+        
             .mattress-options {
                 grid-template-columns: 1fr;
             }
