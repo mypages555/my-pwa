@@ -532,22 +532,36 @@
 
         /* Responsive Design */
         @media (max-width: 480px) {
-            .beds-section {
-                flex-direction: column;
-                gap: 24px;
-            }
-            
-            .mattress-options {
-                grid-template-columns: 1fr 1fr;
-            }
-            
-            header h1 {
-                font-size: 1.5rem;
-            }
-            
-            .card {
-                padding: 20px;
-            }
+        .beds-section {
+            flex-direction: column;
+            gap: 24px;
+        }
+        
+        .beds-column {
+            width: 100%;
+        }
+        
+        /* Новые стили для двухколоночного отображения карточек */
+        #ort-beds-container, #pm-beds-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+        
+        .size-card {
+            margin-bottom: 0;
+        }
+        
+        .mattress-options {
+            grid-template-columns: 1fr 1fr;
+        }
+        
+        header h1 {
+            font-size: 1.5rem;
+        }
+        
+        .card {
+            padding: 20px;
         }
 
         @media (max-width: 360px) {
