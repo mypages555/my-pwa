@@ -531,60 +531,59 @@
         }
 
         /* Responsive Design */
-        @media (max-width: 480px) {
-            .beds-section {
-                flex-direction: row;
-                flex-wrap: wrap;
-                gap: 16px;
-            }
-            
-            .beds-column {
-                flex: 0 0 calc(50% - 8px);
-            }
+   @media (max-width: 480px) {
+    .beds-section {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+    
+    .beds-column {
+        flex: 0 0 calc(50% - 8px);
+    }
+    
+    .size-card {
+        padding: 12px 8px;
+    }
+    
+    .size-name {
+        font-size: 0.8rem;
+    }
+    
+    .size-count {
+        font-size: 1.4rem;
+    }
+    
+    .counter-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 1rem;
+    }
+    
+    header h1 {
+        font-size: 1.5rem;
+    }
+    
+    .card {
+        padding: 20px;
+    }
+    
+    .mattress-options {
+        grid-template-columns: 1fr 1fr;
+    }
+}
 
-        /* Уменьшаем внутренние отступы карточек */
-            .size-card {
-                padding: 12px 8px;
-            }
+@media (max-width: 360px) {
+    .beds-column {
+        flex: 0 0 100%;
+    }
+    
+    .mattress-options {
+        grid-template-columns: 1fr;
+    }
+}
         
-        /* Уменьшаем размер шрифта */
-            .size-name {
-                font-size: 0.8rem;
-            }
-        
-            .size-count {
-                font-size: 1.4rem;
-            }
-        
-        /* Корректируем кнопки */
-            .counter-btn {
-                width: 32px;
-                height: 32px;
-                font-size: 1rem;
-            }
 
-            .mattress-options {
-                grid-template-columns: 1fr 1fr;
-            }
-            
-            header h1 {
-                font-size: 1.5rem;
-            }
-            
-            .card {
-                padding: 20px;
-            }
-        }
-
-        @media (max-width: 360px) {
-            .beds-column {
-                flex: 0 0 100%;
-        }
-        
-            .mattress-options {
-                grid-template-columns: 1fr;
-            }
-        }
 
         /* Animation for counter changes */
         @keyframes pulse {
