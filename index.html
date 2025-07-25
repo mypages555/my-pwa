@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Мой PWA</title>
+  <link rel="manifest" href="manifest.json">
+  <!-- Иконка для PWA -->
+  <link rel="icon" href="icon.png" type="image/png">
+</head>
+<body>
+  <h1>Добро пожаловать в мое PWA!</h1>
+  <script>
+    // Регистрация Service Worker
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js')
+        .then(() => console.log('Service Worker работает!'));
+    }
+  </script>
+</body>
+</html>
