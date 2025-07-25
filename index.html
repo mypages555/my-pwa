@@ -531,57 +531,84 @@
         }
 
         /* Responsive Design */
-   @media (max-width: 480px) {
-    .beds-section {
-        flex-direction: row;
-        flex-wrap: wrap;
-        gap: 16px;
+     @media (max-width: 480px) {
+        .beds-section {
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 20px; /* Увеличили расстояние между колонками */
+        }
+        
+        .beds-column {
+            flex: 0 0 calc(50% - 10px); /* Увеличили вычет для gap */
+        }
+        
+        .size-card {
+            padding: 16px 12px; /* Увеличили отступы внутри карточек */
+            margin-bottom: 16px; /* Увеличили расстояние между карточками */
+        }
+        
+        .size-name {
+            font-size: 1rem; /* Увеличили размер названия размера */
+            margin-bottom: 16px; /* Увеличили отступ */
+        }
+        
+        .size-count {
+            font-size: 1.8rem; /* Увеличили размер счетчика */
+            margin-bottom: 20px; /* Увеличили отступ */
+        }
+        
+        .counter-controls {
+            gap: 12px; /* Увеличили расстояние между кнопками */
+        }
+        
+        .counter-btn {
+            width: 42px; /* Увеличили размер кнопок */
+            height: 42px;
+            font-size: 1.4rem; /* Увеличили размер символов в кнопках */
+            border-radius: 12px; /* Сделали более скругленные углы */
+        }
+        
+        header h1 {
+            font-size: 1.6rem; /* Увеличили размер заголовка */
+        }
+        
+        .mattress-options {
+            grid-template-columns: 1fr 1fr;
+            gap: 12px; /* Увеличили расстояние между кнопками матрасов */
+        }
+        
+        .mattress-option {
+            padding: 18px; /* Увеличили отступы в кнопках матрасов */
+            font-size: 1.1rem; /* Увеличили размер текста */
+        }
     }
-    
-    .beds-column {
-        flex: 0 0 calc(50% - 8px);
-    }
-    
-    .size-card {
-        padding: 12px 8px;
-    }
-    
-    .size-name {
-        font-size: 2.8rem;
-    }
-    
-    .size-count {
-        font-size: 1.4rem;
-    }
-    
-    .counter-btn {
-        width: 32px;
-        height: 32px;
-        font-size: 1rem;
-    }
-    
-    header h1 {
-        font-size: 1.5rem;
-    }
-    
-    .card {
-        padding: 20px;
-    }
-    
-    .mattress-options {
-        grid-template-columns: 1fr 1fr;
-    }
-}
 
-@media (max-width: 350px) {
-    .beds-column {
-        flex: 0 0 100%;
+    @media (max-width: 360px) {
+        .beds-column {
+            flex: 0 0 100%; /* На очень маленьких экранах - одна колонка */
+        }
+        
+        .size-card {
+            padding: 18px 14px; /* Еще больше увеличили отступы */
+        }
+        
+        .size-name {
+            font-size: 1.1rem; /* Еще больше увеличили размер названия */
+        }
+        
+        .size-count {
+            font-size: 2rem; /* Еще больше увеличили счетчик */
+        }
+        
+        .counter-btn {
+            width: 46px; /* Еще больше увеличили кнопки */
+            height: 46px;
+        }
+        
+        .mattress-options {
+            grid-template-columns: 1fr;
+        }
     }
-    
-    .mattress-options {
-        grid-template-columns: 1fr;
-    }
-}
         
 
 
