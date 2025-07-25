@@ -3,408 +3,568 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#4a6fa5">
+    <meta name="theme-color" content="#4361ee">
     <title>Счётчик кроватей</title>
     <link rel="manifest" href="manifest.json">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛏️</text></svg>">
-    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛏️</text></svg>">
+    <link rel="apple-touch-icon" href="image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛏️</text></svg>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>        
-	* {
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a56d4;
+            --secondary: #7209b7;
+            --success: #06d6a0;
+            --danger: #ef476f;
+            --warning: #ffd166;
+            --dark: #1a1a2e;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+            --card-bg: #ffffff;
+            --body-bg: #f0f2f5;
+            --border-radius: 16px;
+            --shadow: 0 4px 12px rgba(0,0,0,0.08);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', system-ui, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         }
-        
+
         body {
-            background: linear-gradient(135deg, #f0f5ff 0%, #e6f0ff 100%);
-            color: #333;
-            padding: 15px;
+            background-color: var(--body-bg);
+            color: var(--dark);
+            padding: 16px;
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding-bottom: 80px; /* Отступ для нижних табов */
         }
-        
+
         .container {
             max-width: 500px;
             margin: 0 auto;
+            width: 100%;
+            flex: 1;
         }
-        
+
+        /* Header Styles */
         header {
             text-align: center;
-            margin-bottom: 20px;
-            padding: 15px;
-            background: linear-gradient(135deg, #4a6fa5 0%, #2c3e50 100%);
-            color: white;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
-        }
-        
-        header h1 {
-            font-size: 1.5rem;
-            margin-bottom: 5px;
-        }
-        
-        header p {
-            font-size: 0.9rem;
-            opacity: 0.9;
-        }
-        
-        .card {
-            background: white;
-            border-radius: 15px;
+            margin-bottom: 24px;
             padding: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            transform: rotate(30deg);
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        header p {
+            font-size: 1rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        /* Card Styles */
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 24px;
             margin-bottom: 20px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-            transition: transform 0.3s ease;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(0,0,0,0.05);
         }
-        
+
         .card:hover {
-            transform: translateY(-3px);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
         }
-        
+
         .card-title {
             display: flex;
             align-items: center;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #f0f4ff;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
         }
-        
+
         .card-title i {
-            margin-right: 10px;
-            font-size: 1.2rem;
+            margin-right: 12px;
+            font-size: 1.4rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-        
+
         .card-title h2 {
-            font-size: 1.2rem;
-            color: #2c3e50;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--dark);
         }
-        
-        .beds-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
+
+        /* Beds Grid */
+        .beds-container {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
         }
-        
-        .size-card {
-            background: #f8faff;
-            border-radius: 10px;
-            padding: 12px 8px;
+
+        .beds-section {
+            display: flex;
+            gap: 16px;
+        }
+
+        .beds-column {
+            flex: 1;
+        }
+
+        .column-title {
             text-align: center;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            font-weight: 600;
+            margin-bottom: 16px;
+            padding: 8px;
+            border-radius: 8px;
+            background: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+        }
+
+        .pm-column .column-title {
+            background: rgba(6, 214, 160, 0.1);
+            color: var(--success);
+        }
+
+        .size-card {
+            background: linear-gradient(135deg, #f8f9ff, #edf2ff);
+            border-radius: 12px;
+            padding: 16px 12px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(67, 97, 238, 0.1);
+            margin-bottom: 12px;
+        }
+
+        .size-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .pm-column .size-card {
+            background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+            border: 1px solid rgba(6, 214, 160, 0.1);
+        }
+
+        .size-card:hover {
+            background: linear-gradient(135deg, #edf2ff, #dbe4ff);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(67, 97, 238, 0.15);
+        }
+
+        .pm-column .size-card:hover {
+            background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+            box-shadow: 0 4px 12px rgba(6, 214, 160, 0.15);
+        }
+
+        .size-name {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--gray);
+            margin-bottom: 12px;
+        }
+
+        .size-count {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--primary);
             transition: all 0.2s ease;
         }
-        
-        .size-card:hover {
-            background: #edf2ff;
-            transform: translateY(-2px);
+
+        .pm-column .size-count {
+            color: var(--success);
         }
-        
-        .size-name {
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: #4a5568;
-            margin-bottom: 8px;
-        }
-        
-        .size-count {
-            font-size: 1.3rem;
-            font-weight: 800;
-            margin-bottom: 8px;
-            color: #2c5282;
-        }
-        
+
         .counter-controls {
             display: flex;
             justify-content: center;
-            gap: 5px;
+            gap: 8px;
         }
-        
+
         .counter-btn {
-            width: 30px;
-            height: 30px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 1.1rem;
-            border: none;
-            transition: all 0.2s ease;
-        }
-        
-        .counter-btn:active {
-            transform: scale(0.95);
-        }
-        
-        .btn-minus {
-            background: #fc8181;
-            color: white;
-        }
-        
-        .btn-plus {
-            background: #48bb78;
-            color: white;
-        }
-        
-        .ort-card .card-title i {
-            color: #4299e1;
-        }
-        
-        .pm-card .card-title i {
-            color: #48bb78;
-        }
-        
-        .mattress-options {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-        
-        .mattress-option {
-            background: #ebf4ff;
-            border: none;
-            border-radius: 10px;
-            padding: 12px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: #2b6cb0;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        
-        .mattress-option:active {
-            transform: scale(0.98);
-            background: #d6e6ff;
-        }
-        
-        .mattress-list {
-            margin-top: 15px;
-        }
-        
-        .mattress-item {
-            background: #fffaf0;
-            border-radius: 12px;
-            padding: 15px;
-            margin-bottom: 12px;
-            border: 1px solid #fed7aa;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .mattress-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-        
-        .mattress-name {
-            font-weight: 600;
-            font-size: 1rem;
-            color: #dd6b20;
-        }
-        
-        .remove-btn {
-            background: none;
-            border: none;
-            color: #e53e3e;
-            font-size: 1.1rem;
-            cursor: pointer;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .remove-btn:active {
-            background: #fff5f5;
-        }
-        
-        .mattress-size {
-            width: 100%;
-            padding: 10px;
-            border-radius: 8px;
-            border: 1px solid #e2e8f0;
-            background: white;
-            margin-bottom: 12px;
-            font-size: 0.9rem;
-        }
-        
-        .mattress-controls {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .mattress-count {
-            min-width: 40px;
-            text-align: center;
-            font-weight: 700;
-            font-size: 1.3rem;
-            margin: 0 10px;
-            color: #dd6b20;
-        }
-        
-        .mattress-btn {
             width: 36px;
             height: 36px;
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #ed8936;
-            color: white;
             font-weight: bold;
-            font-size: 1.2rem;
             cursor: pointer;
+            font-size: 1.2rem;
             border: none;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
-        
-        .mattress-btn:active {
-            transform: scale(0.95);
+
+        .counter-btn:active {
+            transform: scale(0.92);
         }
-        
-        .summary-card {
-            background: linear-gradient(135deg, #ebf8ff 0%, #bee3f8 100%);
-            border: 2px solid #90cdf4;
+
+        .btn-minus {
+            background: var(--danger);
+            color: white;
         }
-        
-        .summary-content {
+
+        .btn-plus {
+            background: var(--success);
+            color: white;
+        }
+
+        /* Mattress Styles */
+        .mattress-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .mattress-option {
+            background: linear-gradient(135deg, #f0f9ff, #e1f0ff);
+            border: none;
+            border-radius: 12px;
+            padding: 16px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--primary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+
+        .mattress-option:hover {
+            background: linear-gradient(135deg, #e1f0ff, #d1e7ff);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(67, 97, 238, 0.1);
+        }
+
+        .mattress-option:active {
+            transform: scale(0.98);
+        }
+
+        .mattress-list {
+            margin-top: 20px;
+        }
+
+        .mattress-item {
+            background: linear-gradient(135deg, #fff9f0, #fff4e6);
+            border-radius: 14px;
+            padding: 20px;
+            margin-bottom: 16px;
+            border: 1px solid rgba(239, 118, 37, 0.15);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+        }
+
+        .mattress-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 0;
+            margin-bottom: 16px;
         }
-        
-        .summary-text {
-            font-size: 1.1rem;
+
+        .mattress-name {
             font-weight: 600;
-            color: #2b6cb0;
+            font-size: 1.1rem;
+            color: #e67700;
         }
-        
-        .total-count {
-            font-size: 2rem;
-            font-weight: 800;
-            color: #2b6cb0;
-        }
-        
-        .reset-btn {
-            width: 100%;
-            padding: 16px;
-            background: white;
+
+        .remove-btn {
+            background: none;
             border: none;
-            border-radius: 12px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #4a5568;
+            color: var(--danger);
+            font-size: 1.2rem;
             cursor: pointer;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            transition: all 0.2s ease;
+        }
+
+        .remove-btn:hover {
+            background: rgba(239, 71, 111, 0.1);
+        }
+
+        .remove-btn:active {
+            transform: scale(0.9);
+        }
+
+        .mattress-size {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+            background: white;
+            margin-bottom: 16px;
+            font-size: 1rem;
+            color: var(--dark);
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .mattress-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mattress-count {
+            min-width: 50px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 1.5rem;
+            margin: 0 12px;
+            color: #e67700;
+        }
+
+        .mattress-btn {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #ff9e00;
+            color: white;
+            font-weight: bold;
+            font-size: 1.3rem;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 3px 8px rgba(255, 158, 0, 0.3);
+            transition: all 0.2s ease;
+        }
+
+        .mattress-btn:active {
+            transform: scale(0.92);
+            box-shadow: 0 1px 4px rgba(255, 158, 0, 0.3);
+        }
+
+        /* Summary Card */
+        .summary-card {
+            background: linear-gradient(135deg, #e0f7fa, #b2ebf2);
+            border: none;
+            text-align: center;
+            padding: 24px;
+            margin-top: 20px;
+        }
+
+        .summary-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .summary-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #01579b;
+        }
+
+        .total-count {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #01579b;
+            text-shadow: 0 2px 4px rgba(1, 87, 155, 0.2);
+        }
+
+        /* Reset Button */
+        .reset-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #ff6b6b, #ff5252);
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
             transition: all 0.3s ease;
+            margin-top: 20px;
         }
-        
+
+        .reset-btn:hover {
+            background: linear-gradient(135deg, #ff5252, #ff3b3b);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.5);
+        }
+
         .reset-btn:active {
-            background: #f7fafc;
-            transform: translateY(2px);
+            transform: translateY(1px);
+            box-shadow: 0 3px 10px rgba(255, 107, 107, 0.4);
         }
-        
+
+        /* Tabs at the bottom */
         .tabs {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
             display: flex;
             background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            margin-bottom: 20px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
         }
-        
+
         .tab {
             flex: 1;
-            padding: 16px;
+            padding: 16px 0;
             text-align: center;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
             color: #718096;
+            font-size: 0.9rem;
         }
-        
+
         .tab.active {
-            background: #4a6fa5;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
         }
-        
+
+        .tab i {
+            display: block;
+            font-size: 1.2rem;
+            margin-bottom: 4px;
+        }
+
         .tab-content {
             display: none;
         }
-        
+
         .tab-content.active {
             display: block;
         }
-        
+
+        /* Table Styles */
         .table-container {
-            background: white;
-            border-radius: 15px;
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+            margin-bottom: 24px;
         }
-        
+
         table {
             width: 100%;
             border-collapse: collapse;
         }
-        
+
         th {
-            background: #f1f5f9;
+            background: #f1f8ff;
             font-weight: 600;
             text-align: left;
-            padding: 15px;
-            border-bottom: 2px solid #e2e8f0;
+            padding: 16px;
+            border-bottom: 2px solid #e1e8ff;
+            color: var(--primary);
         }
-        
+
         td {
-            padding: 15px;
-            border-bottom: 1px solid #edf2f7;
+            padding: 16px;
+            border-bottom: 1px solid #f0f0f0;
         }
-        
+
         tbody tr:nth-child(even) {
-            background: #f9f9f9;
+            background: #fafbff;
         }
-        
+
         .text-center {
             text-align: center;
         }
-        
+
         .footer-row {
-            background: #ebf8ff;
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
             font-weight: 700;
         }
-        
+
         .ort-highlight {
-            color: #3182ce;
+            color: var(--primary);
             font-weight: 700;
         }
-        
+
         .pm-highlight {
-            color: #38a169;
+            color: var(--success);
             font-weight: 700;
         }
-        
-        @media (max-width: 380px) {
-            .beds-grid {
-                grid-template-columns: repeat(2, 1fr);
+
+        /* Responsive Design */
+        @media (max-width: 480px) {
+            .beds-section {
+                flex-direction: column;
+                gap: 24px;
             }
             
             .mattress-options {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            header h1 {
+                font-size: 1.5rem;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .mattress-options {
                 grid-template-columns: 1fr;
             }
+        }
+
+        /* Animation for counter changes */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .changed {
+            animation: pulse 0.3s ease;
         }
     </style>
 </head>
@@ -415,31 +575,28 @@
             <p>Удобный подсчет оснований и матрасов</p>
         </header>
         
-        <div class="tabs">
-            <div class="tab active" data-tab="beds">Основания</div>
-            <div class="tab" data-tab="mattresses">Матрасы</div>
-            <div class="tab" data-tab="tables">Таблицы</div>
-        </div>
-        
         <!-- Вкладка оснований -->
         <div class="tab-content active" id="beds-tab">
-            <div class="card ort-card">
+            <div class="card">
                 <div class="card-title">
                     <i class="fas fa-procedures"></i>
-                    <h2>ОРТ основания</h2>
+                    <h2>Основания ОРТ и ПМ</h2>
                 </div>
-                <div class="beds-grid" id="ort-beds-container">
-                    <!-- Карточки ОРТ будут здесь -->
-                </div>
-            </div>
-            
-            <div class="card pm-card">
-                <div class="card-title">
-                    <i class="fas fa-plus-square"></i>
-                    <h2>ПМ основания</h2>
-                </div>
-                <div class="beds-grid" id="pm-beds-container">
-                    <!-- Карточки ПМ будут здесь -->
+                <div class="beds-container">
+                    <div class="beds-section">
+                        <div class="beds-column ort-column">
+                            <div class="column-title">ОРТ</div>
+                            <div id="ort-beds-container">
+                                <!-- Карточки ОРТ будут здесь -->
+                            </div>
+                        </div>
+                        <div class="beds-column pm-column">
+                            <div class="column-title">ПМ</div>
+                            <div id="pm-beds-container">
+                                <!-- Карточки ПМ будут здесь -->
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -451,7 +608,6 @@
                     <i class="fas fa-mattress-pillow"></i>
                     <h2>Добавить матрас</h2>
                 </div>
-                
                 <div class="mattress-options">
                     <button class="mattress-option" data-name="Форвард">Форвард</button>
                     <button class="mattress-option" data-name="Рекорд">Рекорд</button>
@@ -460,7 +616,6 @@
                     <button class="mattress-option" data-name="Эко 14 люкс">Эко 14 люкс</button>
                     <button class="mattress-option" data-name="Эко 15">Эко 15</button>
                 </div>
-                
                 <div class="mattress-list" id="custom-mattresses-container">
                     <!-- Добавленные матрасы будут здесь -->
                 </div>
@@ -520,7 +675,24 @@
             <i class="fas fa-redo"></i> Сбросить всё
         </button>
     </div>
-
+    
+    <!-- Табы внизу экрана -->
+    <div class="tabs">
+        <div class="tab active" data-tab="beds">
+            <i class="fas fa-bed"></i>
+            <span>Основания</span>
+        </div>
+        <div class="tab" data-tab="mattresses">
+            <i class="fas fa-mattress-pillow"></i>
+            <span>Матрасы</span>
+        </div>
+        <div class="tab" data-tab="tables">
+            <i class="fas fa-table"></i>
+            <span>Таблицы</span>
+        </div>
+    </div>
+    
+    <script src="https://storage.googleapis.com/workbox-cdn/releases/6.5.4/workbox-sw.js"></script>
     <script>
         // ===== PWA ФУНКЦИОНАЛ ===== //
         // Регистрация Service Worker
@@ -531,16 +703,15 @@
                     .catch(err => console.log('Ошибка регистрации SW:', err));
             });
         }
-
+        
         // Определение standalone режима
         window.addEventListener('DOMContentLoaded', () => {
             if (window.matchMedia('(display-mode: standalone)').matches) {
                 console.log('Запущено как PWA');
             }
         });
-
+        
         // ===== СУЩЕСТВУЮЩИЙ ФУНКЦИОНАЛ ПРИЛОЖЕНИЯ ===== //
-        // ... (весь существующий JavaScript код остается без изменений) ...
         // Данные для кроватей
         const bedSizes = [
             '80×200', '90×200', '120×200', '140×200', 
@@ -556,7 +727,6 @@
         function generateBedCards() {
             const ortContainer = document.getElementById('ort-beds-container');
             const pmContainer = document.getElementById('pm-beds-container');
-            
             ortContainer.innerHTML = '';
             pmContainer.innerHTML = '';
             
@@ -594,13 +764,10 @@
             const card = button.closest('.size-card');
             const counter = card.querySelector('.bed-count');
             let value = parseInt(counter.textContent) + change;
-            
             if (value < 0) value = 0;
-            
             counter.textContent = value;
             counter.classList.add('changed');
             setTimeout(() => counter.classList.remove('changed'), 300);
-            
             updateTotal();
             updateBedsTable();
         }
@@ -609,7 +776,6 @@
         function updateBedsTable() {
             const tableBody = document.getElementById('beds-table-body');
             tableBody.innerHTML = '';
-            
             let totalOrt = 0;
             let totalPm = 0;
             
@@ -696,7 +862,6 @@
                     <button class="mattress-btn" onclick="updateMattressCounter(this, 1)">+</button>
                 </div>
             `;
-            
             container.appendChild(card);
             mattressCounter++;
             updateCustomMattressTable();
@@ -707,13 +872,10 @@
             const card = button.closest('.mattress-item');
             const counter = card.querySelector('.mattress-count');
             let value = parseInt(counter.textContent) + change;
-            
             if (value < 0) value = 0;
-            
             counter.textContent = value;
             counter.classList.add('changed');
             setTimeout(() => counter.classList.remove('changed'), 300);
-            
             updateTotal();
             updateCustomMattressTable();
         }
@@ -730,7 +892,6 @@
         function updateCustomMattressTable() {
             const tableBody = document.getElementById('custom-table-body');
             tableBody.innerHTML = '';
-            
             const mattresses = [];
             
             // Собираем все матрасы
@@ -820,7 +981,6 @@
                 tab.addEventListener('click', function() {
                     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
                     document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-                    
                     this.classList.add('active');
                     document.getElementById(`${this.dataset.tab}-tab`).classList.add('active');
                 });
