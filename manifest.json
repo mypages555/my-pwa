@@ -1,13 +1,21 @@
 {
-  "name": "Мое PWA",
-  "short_name": "PWA",
-  "start_url": "/",
+  "name": "Счётчик кроватей",
+  "short_name": "Кровати",
+  "start_url": ".",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#000000",
-  "icons": [{
-    "src": "icon.png",
-    "sizes": "192x192",
-    "type": "image/png"
-  }]
+  "background_color": "#f0f5ff",
+  "theme_color": "#4a6fa5",
+  "description": "Удобный подсчет оснований и матрасов",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='15' fill='%234a6fa5'/><text x='50' y='70' font-size='60' text-anchor='middle' fill='white'>🛏️</text></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%234a6fa5'/><text x='50' y='70' font-size='60' text-anchor='middle' fill='white'>🛏️</text></svg>",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ]
 }
